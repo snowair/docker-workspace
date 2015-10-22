@@ -15,10 +15,10 @@ RUN buildDeps=" \
     && apt-get update && apt-get install -y nano unzip $buildDeps --force-yes  --no-install-recommends  \
     && ln -s `find /usr/lib/x86_64-linux-gnu/ImageMagick-*/bin* -type d`/* /usr/local/bin/
 
-RUN curl -L -o phptrace.zip https://github.com/Qihoo360/phptrace/archive/master.zip && unzip phptrace.zip &&  cd phptrace-master/extension && phpize && ./configure && make && make install && cd ../cmdtool && make && cp phptrace /usr/local/bin/  && cd ../.. && rm -fr phptrace-master \
-    && curl -L -o xhprof.zip https://github.com/phacility/xhprof/archive/master.zip && unzip xhprof.zip && cd xhprof-master/extension && phpize && ./configure && make && make install && cd - && rm -fr xhprof-master \
-    && curl -L -o cphalcon.zip https://github.com/phalcon/cphalcon/archive/master.zip && unzip cphalcon.zip && cd cphalcon-master/build/64bits && phpize && ./configure && make && make install && cd - && rm -fr cphalcon-master \
-    && curl -L -o phpredis.zip https://github.com/phpredis/phpredis/archive/master.zip && unzip phpredis.zip && cd phpredis-master && phpize && ./configure && make && make install && cd - && rm -fr phpredis-master \
+RUN curl -L -o phptrace.zip https://github.com/Qihoo360/phptrace/archive/master.zip && unzip phptrace.zip &&  cd phptrace-master/extension && phpize && ./configure && make && make install && cd ../cmdtool && make && cp phptrace /usr/local/bin/  && cd ../.. && rm -fr phptrace* \
+    && curl -L -o xhprof.zip https://github.com/phacility/xhprof/archive/master.zip && unzip xhprof.zip && cd xhprof-master/extension && phpize && ./configure && make && make install && cd - && rm -fr xhprof* \
+    && curl -L -o cphalcon.zip https://github.com/phalcon/cphalcon/archive/master.zip && unzip cphalcon.zip && cd cphalcon-master/build/64bits && phpize && ./configure && make && make install && cd - && rm -fr cphalcon* \
+    && curl -L -o phpredis.zip https://github.com/phpredis/phpredis/archive/master.zip && unzip phpredis.zip && cd phpredis-master && phpize && ./configure && make && make install && cd - && rm -fr phpredis* \
     && pecl install ev imagick gearman solr igbinary mongo memcache memcached xdebug swoole \
     && docker-php-ext-configure imap  --with-imap --with-imap-ssl --with-kerberos \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --enable-gd-native-ttf \
