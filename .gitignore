@@ -2,3 +2,5 @@
 *.crt
 *.log
 dump.rdb
+.env
+.env.*

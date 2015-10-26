@@ -1,6 +1,8 @@
 server {
     server_name symfony.lo;
-    root /usr/share/nginx/html;
+
+    set $root_path '/var/www';
+    root $root_path;
 
     location / {
         # try to serve file directly, fallback to app.php
@@ -10,7 +12,8 @@ server {
     # This rule should only be placed on your development environment
     # In production, don't include this and don't deploy app_dev.php or config.php
     location ~ ^/(app_dev|config)\.php(/|$) {
-        fastcgi_pass 127.0.0.1:9000;
+        root $root_path;
+        fastcgi_pass php:9000;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
@@ -18,7 +21,8 @@ server {
     }
     # PROD
     location ~ ^/app\.php(/|$) {
-        fastcgi_pass 127.0.0.1:9000;
+        root $root_path;
+        fastcgi_pass php:9000;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;

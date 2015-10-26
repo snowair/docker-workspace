@@ -3,7 +3,7 @@ server {
     server_name  phalcon.lo;
 
     index index.html index.htm index.php;
-    set $root_path '/usr/share/nginx/html';
+    set $root_path '/var/www';
     root $root_path;
 
     try_files $uri $uri/ @rewrite;
@@ -13,9 +13,10 @@ server {
     }
 
     location ~ \.php {
+        root $root_path;
 
         try_files $uri =404;
-        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_pass php:9000;
         fastcgi_index /index.php;
 
         include fastcgi_params;

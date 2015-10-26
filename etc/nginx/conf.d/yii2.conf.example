@@ -6,7 +6,9 @@ server {
     #listen [::]:80 default_server ipv6only=on; ## listen for ipv6
 
     server_name yii.lo;
-    root        /usr/share/nginx/html;
+
+    set $root_path '/var/www';
+    root $root_path;
     index       index.php;
 
     # access_log  /path/to/basic/log/access.log;
@@ -24,9 +26,10 @@ server {
     #error_page 404 /404.html;
 
     location ~ \.php$ {
+        root $root_path;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
-        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_pass   php:9000;
         try_files $uri =404;
     }
 

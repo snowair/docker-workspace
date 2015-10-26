@@ -1,6 +1,9 @@
 server {
   listen      80;
   server_name zf.lo;
+
+  set $root_path '/var/www';
+  root $root_path;
   root        /usr/share/nginx/html;
   index       index.html index.htm index.php;
 
@@ -9,7 +12,8 @@ server {
   }
 
   location ~ \.php$ {
-    fastcgi_pass   127.0.0.1:9000;
+    root $root_path;
+    fastcgi_pass   php:9000;
     fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
     include        fastcgi_params;
   }
