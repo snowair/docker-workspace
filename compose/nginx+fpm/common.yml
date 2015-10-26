@@ -11,7 +11,6 @@ php:
         - ../../etc/php/php.ini-development:/usr/local/etc/php/php.ini
         - ../../etc/php/zend_extensions/xdebug-setting.ini:/usr/local/etc/php/conf.d/xdebug-setting.ini
         - ../../etc/php/zend_extensions/opcache-setting.ini:/usr/local/etc/php/conf.d/opcache-setting.ini
-        - /var/www:/var/www
 
 mongo:
     image: mongo:latest

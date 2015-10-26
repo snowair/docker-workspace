@@ -19,6 +19,8 @@ php:
         - mongo
         - redis
         - memcached
+    volumes:
+        - /var/www:/var/www
 
 mysql:
     container_name: mysql
