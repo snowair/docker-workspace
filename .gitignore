@@ -1,3 +1,4 @@
 *.key
 *.crt
 *.log
+dump.rdb
