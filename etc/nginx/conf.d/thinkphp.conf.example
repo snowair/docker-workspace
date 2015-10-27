@@ -1,0 +1,55 @@
+server {
+    listen       80;
+    server_name  thinkphp.lo;
+    root   /var/www;
+    index  index.html index.htm index.php;
+
+    error_page  404              /404.html;
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    location ~ \.php(/.*)?$ {
+       root   /var/www/GPH_admin/Public;
+       try_files $uri =404;
+       fastcgi_pass php:9000;
+
+       include fastcgi_params;
+
+       #定义变量 $path_info ，用于存放pathinfo信息
+       set $path_info "";
+       #定义变量 $real_script_name，用于存放真实地址
+       set $real_script_name $fastcgi_script_name;
+       #如果地址与引号内的正则表达式匹配
+       if ($fastcgi_script_name ~ "^(.+?\.php)(/.+?)(index\.php)?$") {
+               #将文件地址赋值给变量 $real_script_name
+               set $real_script_name $1;
+               #将文件地址后的参数赋值给变量 $path_info
+               set $path_info $2;
+       }
+
+       #配置fastcgi的一些参数
+       fastcgi_param SCRIPT_NAME $real_script_name;
+       fastcgi_param SCRIPT_FILENAME $document_root$real_script_name;
+       fastcgi_param PATH_INFO $path_info;
+    }
+
+    # 禁止执行php脚本的目录
+    location ~ /Uploads/.*\.php$ {
+        deny all;
+    }
+
+    # 禁止访问.htaccess
+    location ~ /\.ht {
+        deny  all;
+    }
+
+
+    # 单入口文件可以 隐藏index.php
+    if (!-e $request_filename)
+    {
+        # 多入口文件的项目应注释此行, 并在项目中的url模式设为:普通模式,兼容模式,pathinfo模式之一. 
+        # rewrite ^/(.*)$ /index.php/$1;
+    }
+}

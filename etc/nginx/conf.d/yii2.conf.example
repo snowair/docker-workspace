@@ -7,8 +7,7 @@ server {
 
     server_name yii.lo;
 
-    set $root_path '/var/www';
-    root $root_path;
+    root /var/www;
     index       index.php;
 
     # access_log  /path/to/basic/log/access.log;
@@ -26,7 +25,6 @@ server {
     #error_page 404 /404.html;
 
     location ~ \.php$ {
-        root $root_path;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
         fastcgi_pass   php:9000;
