@@ -17,7 +17,7 @@ server {
     location / {
         set $static 0;
         set $exsit 0;
-        if  ($uri ~ \.(css|js|jpg|png|gif|woff|eot|svg|css\.map)$) {
+        if  ($uri ~ \.(css|js|jpg|png|gif|woff|eot|svg|css\.map|js\.map)$) {
             set $static 1;
         }
         if (-e $request_filename) {
@@ -27,7 +27,7 @@ server {
         set $static_exsit $static$exsit;
         if ($static_exsit = 00) {
             # 如果既不是静态文件也不存在该文件, 则内部重定向到php
-            rewrite ^/(index.php/)?(.*)$ /index.php?s=/$2; # rewrite模式和普通模式及兼容模式支持
+            rewrite ^/(.*)$ /index.php?s=/$1;
         }
     }
 
