@@ -15,24 +15,26 @@ server {
     }
 
     location / {
+        try_files $uri @rewrite;
+    }
+
+    location @rewrite {
         set $static 0;
-        set $exsit 0;
-        if  ($uri ~ \.(css|js|jpg|png|gif|ico|woff|eot|svg|css\.map|js\.map)$) {
+        if  ($uri ~ \.(css|js|jpg|jpeg|png|gif|ico|woff|eot|svg|css\.map|min\.map)$) {
             set $static 1;
         }
-        if (-e $request_filename) {
-            set $exsit 1;
-        }
 
-        set $static_exsit $static$exsit;
-        if ($static_exsit = 00) {
-            # 如果既不是静态文件也不存在该文件, 则内部重定向到php
+        if ($static = 0) {
             rewrite ^/(.*)$ /index.php?s=/$1;
         }
     }
 
+    location ~ /Uploads/.*\.php$ {
+        deny all;
+    }
+
     location ~ \.php/ {
-       if ($request_uri ~ ^(.+\.php)(/.+)$) { }
+       if ($request_uri ~ ^(.+\.php)(/.+?)($|\?)) { }
        fastcgi_pass php:9000;
        include fastcgi_params;
        fastcgi_param SCRIPT_NAME     $1;
@@ -44,10 +46,6 @@ server {
         fastcgi_pass php:9000;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
-    }
-
-    location ~ /Uploads/.*\.php$ {
-        deny all;
     }
 
     location ~ /\.ht {
