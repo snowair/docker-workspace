@@ -1,0 +1,24 @@
+# mysql + memcached + redis + mongodb
+mysql:
+    container_name: mysql
+    extends:
+        file: common.yml
+        service: mysql 
+
+mongo:
+    container_name: mongo
+    extends:
+        file: common.yml
+        service: mongo 
+
+memcached:
+    container_name: memcached
+    extends:
+        file: common.yml
+        service: memcached 
+
+redis:
+    container_name: redis 
+    extends:
+        file: common.yml
+        service: redis 
