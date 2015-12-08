@@ -1,0 +1,85 @@
+# nginx + php-fpm + mysql + memcached + redis + mongodb
+nginx:
+    container_name: nginx
+    extends:
+        file: common.yml
+        service: nginx
+    links:
+        - php
+    volumes_from:
+        - php
+    extra_hosts:
+        - "cidev.cn:172.17.42.1"
+        - "invo.lo:172.17.42.1"
+        - "micro.lo:172.17.42.1"
+        - "multiple.lo:172.17.42.1"
+        - "xhgui.lo:172.17.42.1"
+        - "admin.gph.cn:172.17.42.1"
+        - "sps.gph.cn:172.17.42.1"
+        - "micro.gph.cn:172.17.42.1"
+        - "poscard.gph.cn:172.17.42.1"
+        - "api.gph.cn:172.17.42.1"
+
+php:
+    container_name: php
+    image: snowair/php-fpm:7.0.0
+    environment:
+        - ENVIRONMENT=DEVLOPMENT
+    links:
+        - mysql
+        - mongo
+        - redis
+        - memcached
+    volumes:
+        - /var/www:/var/www
+        - ../../etc/php/php.ini-development:/usr/local/etc/php/php.ini
+        - ../../etc/php/zend_extensions/opcache-setting.ini:/usr/local/etc/php/conf.d/opcache-setting.ini
+        - ~/git/studynote:/var/www/studynote
+        - ~/git/GPH_poscard:/var/www/GPH_poscard
+        - ~/git/GPH_sps:/var/www/GPH_sps
+        - ~/git/GPH_admin:/var/www/GPH_admin
+        - ~/git/GPH_micro:/var/www/GPH_micro
+        - ~/git/GPH_service:/var/www/GPH_service
+        - ~/git/GPH_shop:/var/www/GPH_shop
+        - ~/git/GPH_pcms:/var/www/pcms
+        - ~/git/invo:/var/www/invo
+        - ~/git/xhgui:/var/www/xhgui
+        - ~/git/mvc/micro-factory-default:/var/www/micro
+        - ~/git/mvc/multiple-shared-layouts:/var/www/multiple
+    extra_hosts:
+        - "cidev.cn:172.17.42.1"
+        - "invo.lo:172.17.42.1"
+        - "micro.lo:172.17.42.1"
+        - "multiple.lo:172.17.42.1"
+        - "xhgui.lo:172.17.42.1"
+        - "admin.gph.cn:172.17.42.1"
+        - "sps.gph.cn:172.17.42.1"
+        - "micro.gph.cn:172.17.42.1"
+        - "poscard.gph.cn:172.17.42.1"
+        - "api.gph.cn:172.17.42.1"
+
+mysql:
+    container_name: mysql
+    extends:
+        file: common.yml
+        service: mysql 
+
+mongo:
+    container_name: mongo
+    image: mongo:latest
+    volumes:
+        - /lib/mongodb:/data/db
+    ports:
+        - 27017:27017
+
+memcached:
+    container_name: memcached
+    extends:
+        file: common.yml
+        service: memcached 
+
+redis:
+    container_name: redis 
+    extends:
+        file: common.yml
+        service: redis 
