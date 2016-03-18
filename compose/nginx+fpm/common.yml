@@ -11,6 +11,7 @@ php:
         - ENVIRONMENT=DEVLOPMENT
     volumes:
         - ../../etc/php/php.ini-development:/usr/local/etc/php/php.ini
+        - ../../etc/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
         - ../../etc/php/zend_extensions/xdebug-setting.ini:/usr/local/etc/php/conf.d/xdebug-setting.ini
         - ../../etc/php/zend_extensions/opcache-setting.ini:/usr/local/etc/php/conf.d/opcache-setting.ini
 
