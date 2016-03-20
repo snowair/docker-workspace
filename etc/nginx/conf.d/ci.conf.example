@@ -24,6 +24,10 @@ server {
             set $static 1;
         }
 
+        if ($uri ~ ^/$) {
+            rewrite ^ /index.php?$query_string last;
+        }
+
         if ($static = 0) {
             rewrite ^/(.*)$ /index.php/$1;
         }
@@ -39,6 +43,7 @@ server {
        include fastcgi_params;
        fastcgi_param PATH_INFO       $fastcgi_path_info;
        fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
+       fastcgi_param DOCUMENT_URI    $fastcgi_script_name;
        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
 
