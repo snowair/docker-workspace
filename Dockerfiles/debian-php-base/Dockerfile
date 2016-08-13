@@ -1,7 +1,7 @@
 FROM debian:jessie
 
 RUN buildDeps=" \
-        nano unzip bzip2 xz-utils iputils-ping \
+        nano unzip bzip2 telnet strace sysstat lsof fuser xz-utils iputils-ping \
         ca-certificates curl librecode0 libsqlite3-0 libxml2 \
         autoconf file g++ gcc libc-dev make pkg-config re2c \
         libfreetype6-dev \
