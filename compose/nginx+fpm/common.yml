@@ -9,7 +9,7 @@ nginx:
         - 114.114.114.114
 
 php:
-    image: snowair/php-fpm:7.0
+    image: snowair/php-fpm:5.6
     environment:
         - ENVIRONMENT=DEVLOPMENT
     volumes:
