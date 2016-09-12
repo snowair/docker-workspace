@@ -19,7 +19,7 @@ php:
         - ../../etc/php/zend_extensions/opcache-setting.ini:/usr/local/etc/php/conf.d/opcache-setting.ini
     dns:
         - 114.114.114.114
-    cap-add:
+    cap_add:
         - ALL
     privileged: true
 
