@@ -55,3 +55,11 @@ redis:
     volumes:
         - ../../data/redis:/data
 
+oracle:
+    image: wnameless/oracle-xe-11g:latest
+    ports:
+        - 1521:1521
+    volumes:
+        - /opt/oracle-data:/opt/oracle-data
+    environment:
+        - ORACLE_ALLOW_REMOTE=true
