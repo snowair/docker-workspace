@@ -56,10 +56,16 @@ redis:
         - ../../data/redis:/data
 
 oracle:
-    image: wnameless/oracle-xe-11g:latest
+    image: registry.cn-hangzhou.aliyuncs.com/qida/oracle-xe-11g
     ports:
         - 1521:1521
     volumes:
-        - /opt/oracle-data:/opt/oracle-data
+        # 本地化过程:
+        # 首次启动时将 /opt/u01 挂载到容器的 /opt/u01, 待完全启动可以正常连接后,进入容器执行: service oracle-xe stop
+        # 然后执行: mv /u01/* /opt/u01
+        # 最后停止容器, 将/opt/u01挂载到/u01
+        # 启动容器即可
+        - /opt/u01:/u01
+        #- /opt/u01:/opt/u01
     environment:
         - ORACLE_ALLOW_REMOTE=true
