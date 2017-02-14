@@ -3,7 +3,10 @@ FROM debian:jessie
 RUN buildDeps=" \
         nano unzip bzip2 telnet strace sysstat lsof psmisc net-tools xz-utils iputils-ping \
         ca-certificates curl librecode0 libsqlite3-0 libxml2 \
-        autoconf file g++ gcc libc-dev make pkg-config re2c \
+        autoconf file g++ gcc libc-dev make pkg-config re2c wget \
+        libedit2 \
+        libedit-dev \
+        libaio-dev \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
