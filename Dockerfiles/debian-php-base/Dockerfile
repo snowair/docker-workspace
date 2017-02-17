@@ -1,5 +1,8 @@
 FROM debian:jessie
 
+COPY oracle/ /usr/lib/
+ENV OCI_INSTANT_PATH /usr/lib/instantclient_12_1
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$OCI_INSTANT_PATH
 RUN buildDeps=" \
         nano unzip bzip2 telnet strace sysstat lsof psmisc net-tools xz-utils iputils-ping \
         ca-certificates curl librecode0 libsqlite3-0 libxml2 \
@@ -23,5 +26,7 @@ RUN buildDeps=" \
     && apt-get update && apt-get install -y $buildDeps --force-yes  --no-install-recommends && apt-get autoremove -y && apt-get clean -y  \
     && ln -s `find /usr/lib/x86_64-linux-gnu/ImageMagick-*/bin* -type d`/* /usr/local/bin/ \
     && rm -rf /var/lib/apt/lists/* \
-
+    && cd /usr/lib/ && unzip instantclient-basic-linux.x64-12.1.0.2.0.zip && unzip instantclient-sdk-linux.x64-12.1.0.2.0.zip \
+    && ln -s $OCI_INSTANT_PATH/libclntsh.so.*.1  $OCI_INSTANT_PATH/libclntsh.so \
+    && rm instantclient*.zip
 CMD ["/bin/bash"]
