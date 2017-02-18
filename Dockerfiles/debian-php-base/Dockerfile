@@ -1,9 +1,14 @@
 FROM debian:jessie
 
-COPY sources.list /etc/apt/sources.list
+COPY 163-sources.list /etc/apt/163-sources.list
 ENV OCI_INSTANT_PATH /usr/lib/instantclient_12_1
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$OCI_INSTANT_PATH
-RUN if [ -n "$HTTP_PROXY" ]; then \
+ARG NETEASE
+ARG APT_PROXY
+RUN if [ -n "$NETEASE" ]; then \
+        mv -f /etc/apt/163-sources.list  /etc/apt/sources.list ;\
+	fi; \
+    if [ -n "$HTTP_PROXY" -a  -n "$APT_PROXY" ]; then \
         apt_http_config="-o Acquire::http::proxy=$HTTP_PROXY" ; \
         apt_https_config="-o Acquire::https::proxy=$HTTP_PROXY" ; \
 	fi; \
@@ -30,7 +35,12 @@ RUN if [ -n "$HTTP_PROXY" ]; then \
     && apt-get $apt_http_config $apt_https_config update && apt-get $apt_http_config $apt_https_config install -y $buildDeps --force-yes  --no-install-recommends && apt-get autoremove -y && apt-get clean -y  \
     && ln -s `find /usr/lib/x86_64-linux-gnu/ImageMagick-*/bin* -type d`/* /usr/local/bin/ \
     && rm -rf /var/lib/apt/lists/*
-RUN cd /usr/lib; \
+RUN if [ -n "$HTTP_PROXY" ]; then \
+        export http_proxy=$HTTP_PROXY ; \
+        export https_proxy=$HTTP_PROXY ; \
+        export HTTPS_PROXY=$HTTP_PROXY ; \
+	fi; \
+    cd /usr/lib; \
     wget -O instantclient-basic-linux.x64.zip https://github.com/snowair/docker-workspace/raw/oraclelib/Dockerfiles/debian-php-base/oracle/instantclient-basic-linux.x64-12.1.0.2.0.zip \
     && wget -O instantclient-sdk-linux.x64.zip https://github.com/snowair/docker-workspace/raw/oraclelib/Dockerfiles/debian-php-base/oracle/instantclient-sdk-linux.x64-12.1.0.2.0.zip \
     && cd /usr/lib/ && unzip instantclient-basic-linux.x64.zip && unzip instantclient-sdk-linux.x64.zip \
