@@ -29,7 +29,7 @@ RUN if [ -n "$HTTP_PROXY" ]; then \
 	&& set -x \
     && apt-get $apt_http_config $apt_https_config update && apt-get $apt_http_config $apt_https_config install -y $buildDeps --force-yes  --no-install-recommends && apt-get autoremove -y && apt-get clean -y  \
     && ln -s `find /usr/lib/x86_64-linux-gnu/ImageMagick-*/bin* -type d`/* /usr/local/bin/ \
-    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/lib/apt/lists/*
 RUN cd /usr/lib; \
     wget -O instantclient-basic-linux.x64.zip https://github.com/snowair/docker-workspace/raw/oraclelib/Dockerfiles/debian-php-base/oracle/instantclient-basic-linux.x64-12.1.0.2.0.zip \
     && wget -O instantclient-sdk-linux.x64.zip https://github.com/snowair/docker-workspace/raw/oraclelib/Dockerfiles/debian-php-base/oracle/instantclient-sdk-linux.x64-12.1.0.2.0.zip \
