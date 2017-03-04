@@ -16,6 +16,7 @@ RUN if [ -n "$NETEASE" ]; then \
         nano unzip bzip2 telnet strace sysstat lsof psmisc net-tools xz-utils iputils-ping \
         ca-certificates curl librecode0 libsqlite3-0 libxml2 \
         autoconf file g++ gcc libc-dev make pkg-config re2c wget bison \
+        libgmp-dev \
         libedit2 \
         libedit-dev \
         libaio-dev \
