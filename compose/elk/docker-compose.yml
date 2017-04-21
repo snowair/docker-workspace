@@ -1,0 +1,16 @@
+elk:
+    image: sebp/elk
+    ports:
+        - 9200:9200
+        - 5044:5044
+        - 5601:5601
+    privileged: true
+    volumes:
+        - /var/lib/elasticsearch:/var/lib/elasticsearch
+    environment:
+        - ES_HEAP_SIZE=2g
+        - LS_HEAP_SIZE=1g
+        - ELASTICSEARCH_START=1
+        - KIBANA_START=1
+        - LOGSTASH_START=1
+        - TZ=Asia/Shanghai
