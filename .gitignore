@@ -3,3 +3,4 @@ dump.rdb
 .env
 .env.*
 *.include
+data/
