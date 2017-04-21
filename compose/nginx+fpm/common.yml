@@ -12,7 +12,7 @@ nginx:
         - HTTPS_PROXY=
 
 php:
-    image: snowair/php-fpm:5.6
+    image: snowair/php-fpm:7.1
     environment:
         - ENVIRONMENT=DEVLOPMENT
     volumes:
@@ -89,3 +89,20 @@ oracle:
         - HTTP_PROXY=
         - HTTPS_PROXY=
         - ORACLE_ALLOW_REMOTE=true
+
+elk:
+    image: sebp/elk
+    ports:
+        - 9200:9200
+        - 5044:5044
+        - 5601:5601
+    privileged: true
+    volumes:
+        - ../../data/elasticsearch:/var/lib/elasticsearch
+    environment:
+        - ES_HEAP_SIZE=2g
+        - LS_HEAP_SIZE=1g
+        - ELASTICSEARCH_START=1
+        - KIBANA_START=1
+        - LOGSTASH_START=1
+        - TZ=Asia/Shanghai
