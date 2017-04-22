@@ -28,7 +28,6 @@ Start a full php development(nginx+php+mysql+redis+memcache+mongodb+elasticsearc
 │   │       └── Dockerfile
 │   └── oracle
 │       └── Dockerfile
-├── env
 ├── etc
 │   ├── mysql                          # mysql configuration
 │   │   ├── conf.d                    
@@ -73,6 +72,14 @@ Start a full php development(nginx+php+mysql+redis+memcache+mongodb+elasticsearc
 │           └── xdebug-setting.ini       # real effective xdebug config.
 └── README.md
 ```
+
+# Add tools alias
+
+copy `.bashrc_docker` to your HOME directory. it add thress usefull command:
+
+* `docker-enter` : can enter any runing container
+* `docker-ip` can get the containerr ip address 
+* `docker-pid` can get the containerr pid
 
 # Persistent oracle db data
 
