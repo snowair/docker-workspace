@@ -145,6 +145,7 @@
 
 ; session.hash_bits_per_character
 ;   Default Value: 4
+session.sid_bits_per_character=4
 ;   Development Value: 5
 ;   Production Value: 5
 
