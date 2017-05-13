@@ -1,6 +1,10 @@
 # About this Repo
 
-PHP in this docker is compiled with many usefull php-exts for delvelpment. So, don't use it for production.
+This is a fork repo from https://github.com/docker-library/php. 
+
+The diffrent from the origin one is that :
+
+* PHP in this docker is compiled with many usefull php-exts for delvelpment. So, don't use it for production.
 
 All Exts
 ------------
