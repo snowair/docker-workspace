@@ -30,7 +30,7 @@ RUN if [ -n "$NETEASE" ]; then \
         libpq-dev libtidy-dev libgearman-dev libev-dev \
 		libreadline6-dev \
 		librecode-dev \
-		libsqlite3-dev \
+		libsqlite3-dev dpkg-dev libpcre3-dev\
 	" \
 	&& set -x \
     && apt-get $apt_http_config $apt_https_config update && apt-get $apt_http_config $apt_https_config install -y $buildDeps --force-yes  --no-install-recommends && apt-get autoremove -y && apt-get clean -y  \
