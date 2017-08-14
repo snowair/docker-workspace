@@ -1,0 +1,88 @@
+nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+        - 80:80
+        - 443:443
+    volumes:
+        - ../../etc/nginx:/etc/nginx
+    dns:
+        - 114.114.114.114
+    environment:
+        - HTTP_PROXY=
+        - HTTPS_PROXY=
+    links:
+        - php
+    volumes_from:
+        - php
+php:
+    image: snowair/php-fpm:7.1
+    container_name: php
+    environment:
+        - ENVIRONMENT=DEVLOPMENT
+    volumes:
+        - ../../etc/php/php.ini-development:/usr/local/etc/php/php.ini
+        - ../../etc/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
+        - ../../etc/php/zend_extensions/xdebug-setting.ini:/usr/local/etc/php/conf.d/xdebug-setting.ini
+        - ../../etc/php/zend_extensions/opcache-setting.ini:/usr/local/etc/php/conf.d/opcache-setting.ini
+        - /d/www:/var/www
+    dns:
+        - 114.114.114.114
+    cap_add:
+        - ALL
+    privileged: true
+    environment:
+        - HTTP_PROXY=
+        - HTTPS_PROXY=
+    links:
+        - mysql
+        - mongo
+        - redis
+        - memcached
+mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+        - 27017:27017
+    # docker toolbox不支持mongodb挂载主机目录(VBOX机制所限)
+    # volumes:
+        # - /d/mongodb/data:/data/db
+    environment:
+        - HTTP_PROXY=
+        - HTTPS_PROXY=
+
+mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+        - 3306:3306
+    volumes:
+        - /d/mysql/data:/var/lib/mysql
+        - ../../etc/mysql/my.cnf:/etc/mysql/my.cnf
+        - ../../etc/mysql/conf.d:/etc/mysql/conf.d 
+    environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - HTTP_PROXY=
+        - HTTPS_PROXY=
+
+memcached:
+    image: memcached:latest
+    container_name: memcached
+    ports:
+        - 11211:11211
+    command: "memcached -m 64"
+    environment:
+        - HTTP_PROXY=
+        - HTTPS_PROXY=
+
+redis:
+    image: redis:latest
+    container_name: redis 
+    ports:
+        - 6379:6379
+    volumes:
+        - ../../data/redis:/data
+    environment:
+        - HTTP_PROXY=
+        - HTTPS_PROXY=
+
