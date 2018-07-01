@@ -1,0 +1,47 @@
+# nginx + php-fpm + mysql + memcached + redis + mongodb
+nginx:
+    container_name: nginx
+    extends:
+        file: common.yml
+        service: nginx
+    links:
+        - php
+    volumes_from:
+        - php
+
+php:
+    container_name: php
+    extends:
+        file: common.yml
+        service: php 
+    links:
+        - mysql
+        - redis
+        # - mongo
+        # - memcached
+    volumes:
+        - /private/var/www:/var/www
+
+mysql:
+    container_name: mysql
+    extends:
+        file: common.yml
+        service: mysql 
+
+# mongo:
+    # container_name: mongo
+    # extends:
+        # file: common.yml
+        # service: mongo 
+
+# memcached:
+    # container_name: memcached
+    # extends:
+        # file: common.yml
+        # service: memcached 
+
+redis:
+    container_name: redis 
+    extends:
+        file: common.yml
+        service: redis 

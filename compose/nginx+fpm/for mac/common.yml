@@ -1,0 +1,86 @@
+nginx:
+    image: nginx:latest
+    ports:
+        - 80:80
+        - 443:443
+    volumes:
+        - ../../../etc/nginx:/etc/nginx
+    dns:
+        - 114.114.114.114
+    environment:
+        - HTTP_PROXY=
+        - HTTPS_PROXY=
+
+php:
+    image: snowair/php-fpm:7.1
+    volumes:
+        - ../../../etc/php/php.ini-development:/usr/local/etc/php/php.ini
+        - ../../../etc/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
+        - ../../../etc/php/zend_extensions/xdebug-setting.ini:/usr/local/etc/php/conf.d/xdebug-setting.ini
+        - ../../../etc/php/zend_extensions/opcache-setting.ini:/usr/local/etc/php/conf.d/opcache-setting.ini
+    dns:
+        - 114.114.114.114
+    cap_add:
+        - ALL
+    privileged: true
+    environment:
+        - HTTP_PROXY=
+        - HTTPS_PROXY=
+
+mongo:
+    image: mongo:latest
+    volumes:
+        - /private/var/lib/mongodb:/data/db
+    ports:
+        - 27017:27017
+    environment:
+        - HTTP_PROXY=
+        - HTTPS_PROXY=
+
+mysql:
+    image: mysql:5.6
+    ports:
+        - 3306:3306
+    volumes:
+        - /private/var/lib/mysql:/var/lib/mysql
+        - ../../../etc/mysql/my.cnf:/etc/mysql/my.cnf
+        - ../../../etc/mysql/conf.d:/etc/mysql/conf.d 
+    environment:
+        - HTTP_PROXY=
+        - HTTPS_PROXY=
+
+memcached:
+    image: memcached:latest
+    ports:
+        - 11211:11211
+    command: "memcached -m 64"
+    environment:
+        - HTTP_PROXY=
+        - HTTPS_PROXY=
+
+redis:
+    image: redis:latest
+    ports:
+        - 6379:6379
+    volumes:
+        - ../../../data/redis:/data
+    environment:
+        - HTTP_PROXY=
+        - HTTPS_PROXY=
+
+elk:
+    image: sebp/elk
+    ports:
+        - 9200:9200
+        - 5044:5044
+        - 5601:5601
+    privileged: true
+    volumes:
+        - ../../../data/elasticsearch:/var/lib/elasticsearch
+    environment:
+        - ES_HEAP_SIZE=2g
+        - LS_HEAP_SIZE=1g
+        - ELASTICSEARCH_START=1
+        - KIBANA_START=1
+        - LOGSTASH_START=1
+        - TZ=Asia/Shanghai
