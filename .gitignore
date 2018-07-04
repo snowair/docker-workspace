@@ -4,3 +4,4 @@ dump.rdb
 .env.*
 *.include
 data/
+.DS_Store

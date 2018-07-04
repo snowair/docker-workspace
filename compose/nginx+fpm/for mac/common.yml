@@ -1,16 +1,12 @@
 nginx:
     image: nginx:latest
-    ports:
-        - 80:80
-        - 443:443
-    volumes:
-        - ../../../etc/nginx:/etc/nginx
     dns:
         - 114.114.114.114
     environment:
         - HTTP_PROXY=
         - HTTPS_PROXY=
-
+openresty:
+    image: openresty/openresty:latest
 php:
     image: snowair/php-fpm:7.1
     volumes:
@@ -30,7 +26,7 @@ php:
 mongo:
     image: mongo:latest
     volumes:
-        - /private/var/lib/mongodb:/data/db
+        - /Volumes/SSD/var/lib/mongodb:/data/db
     ports:
         - 27017:27017
     environment:
@@ -42,7 +38,7 @@ mysql:
     ports:
         - 3306:3306
     volumes:
-        - /private/var/lib/mysql:/var/lib/mysql
+        - /Volumes/SSD/var/lib/mysql:/var/lib/mysql
         - ../../../etc/mysql/my.cnf:/etc/mysql/my.cnf
         - ../../../etc/mysql/conf.d:/etc/mysql/conf.d 
     environment:
