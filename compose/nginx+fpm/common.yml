@@ -40,10 +40,9 @@ mongo:
         - HTTPS_PROXY=
 
 mysql:
-    image: mysql:latest
+    image: mysql:5.6
 # init root password , only uncomment it in the first time starting.
-    # environment:
-        # - MYSQL_ROOT_PASSWORD=root
+
     ports:
         - 3306:3306
     volumes:
