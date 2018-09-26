@@ -1,14 +1,40 @@
-# nginx + php-fpm + mysql + memcached + redis + mongodb
+# nginx + php-fpm + mysql + memcached + redis + mongodb + openresty
+forward:
+    container_name: forward
+    extends:
+        file: common.yml
+        service: nginx
+    ports:
+        - 80:80
+        - 443:443
+    links:
+        - nginx
+        - openresty
+    volumes:
+        - ../../etc/forward:/etc/nginx
 nginx:
     container_name: nginx
     extends:
         file: common.yml
         service: nginx
+    volumes:
+        - ../../etc/nginx:/etc/nginx
     links:
         - php
     volumes_from:
         - php
-
+openresty:
+    container_name: openresty
+    extends:
+        file: common.yml
+        service: openresty
+    links:
+        - mysql
+        - redis
+    volumes:
+        - ../../etc/openresty:/usr/local/openresty/nginx/conf
+    volumes_from:
+        - php
 php:
     container_name: php
     extends:
@@ -19,6 +45,8 @@ php:
         - mongo
         - redis
         - memcached
+    environment:
+        - ENVIRONMENT=DEVLOPMENT
     volumes:
         - /var/www:/var/www
 
@@ -27,6 +55,8 @@ mysql:
     extends:
         file: common.yml
         service: mysql 
+#    environment:
+#        - MYSQL_ROOT_PASSWORD=root
 
 mongo:
     container_name: mongo
