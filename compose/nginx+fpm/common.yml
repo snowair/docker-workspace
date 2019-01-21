@@ -8,6 +8,7 @@ nginx:
 openresty:
     image: openresty/openresty:latest
     volumes:
+        - ../../lualib/pack.so:/usr/local/openresty/lualib/pack.so
         - ../../lualib/resty/http.lua:/usr/local/openresty/lualib/resty/http.lua
         - ../../lualib/resty/http_headers.lua:/usr/local/openresty/lualib/resty/http_headers.lua
 
