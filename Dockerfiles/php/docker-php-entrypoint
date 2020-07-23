@@ -8,4 +8,5 @@ fi
 
 useradd -m  -u 1000 -U -d  /home/developer developer
 usermod -G www-data developer
+usermod -G developer www-data
 exec "$@"
